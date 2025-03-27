@@ -10,11 +10,20 @@
     "start": "next start",
     "lint": "next lint",
     "clean": "rm -rf .next",
-    "type-check": "tsc --noEmit",
-    "prepare": "husky install",
+    "type-check": "tsc -p tsconfig.lint.json --noEmit",
+    "prepare": "husky",
+    "precommit": "lint-staged",
+    "postcommit": "rm -f tsconfig.lint.json",
     "analyze": "cross-env ANALYZE=true next build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "node scripts/generate-tsconfig.js",
+      "npm run lint && npm run type-check",
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
@@ -56,11 +65,13 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv": "^16.4.7",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-storybook": "^0.11.1",
     "fs-extra": "^11.2.0",
     "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
     "only-allow": "^1.2.1",
     "postcss": "^8",
     "react-devtools": "^6.0.1",
