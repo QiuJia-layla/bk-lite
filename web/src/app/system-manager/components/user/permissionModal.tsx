@@ -59,7 +59,7 @@ const PermissionModal: React.FC<PermissionModalProps> = ({ visible, node, onOk, 
             const newData = [...appData];
             const index = newData.findIndex(item => item.key === record.key);
             if (index > -1) {
-              newData[index].permission = value as 'full' | 'rule' | 'read' | 'write';
+              newData[index].permission = value as 'full' | 'rule';
             }
           }}
         />
